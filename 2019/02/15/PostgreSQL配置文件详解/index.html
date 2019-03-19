@@ -1,0 +1,1055 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
+
+<link rel="stylesheet" href="/css/main.css?v=6.7.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.7.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.7.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.7.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.7.0" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '6.7.0',
+    sidebar: {"position":"left","display":"hide","offset":12,"b2t":false,"scrollpercent":true,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+<script>(function(T,h,i,n,k,P,a,g,e){g=function(){P=h.createElement(i);a=h.getElementsByTagName(i)[0];P.src=k;P.charset="utf-8";P.async=1;a.parentNode.insertBefore(P,a)};T["ThinkPageWeatherWidgetObject"]=n;T[n]||(T[n]=function(){(T[n].q=T[n].q||[]).push(arguments)});T[n].l=+new Date();if(T.attachEvent){T.attachEvent("onload",g)}else{T.addEventListener("load",g,false)}}(window,document,"script","tpwidget","//widget.seniverse.com/widget/chameleon.js"))</script>
+<script>tpwidget("init", {
+    "flavor": "bubble",
+    "location": "WM7B0X53DZW2",
+    "geolocation": "enabled",
+    "position": "top-right",
+    "margin": "10px 6px",
+    "language": "auto",
+    "unit": "c",
+    "theme": "chameleon",
+    "uid": "U1AAC13036",
+    "hash": "8d6b03486fba486345f7df66ac8bee11"
+});
+tpwidget("show");</script>
+
+  <meta name="description" content="PostgreSQL11配置详解 配置文件位置12345678910111213postgres=# select name, setting from pg_settings where category=&apos;File Locations&apos; ;       name        |                setting                 ------------------">
+<meta name="keywords" content="PostgreSQL">
+<meta property="og:type" content="article">
+<meta property="og:title" content="PostgreSQL配置文件详解">
+<meta property="og:url" content="https://www.cloudyslife.cn/2019/02/15/PostgreSQL配置文件详解/index.html">
+<meta property="og:site_name" content="Cloudy">
+<meta property="og:description" content="PostgreSQL11配置详解 配置文件位置12345678910111213postgres=# select name, setting from pg_settings where category=&apos;File Locations&apos; ;       name        |                setting                 ------------------">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-03-19T04:10:29.602Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="PostgreSQL配置文件详解">
+<meta name="twitter:description" content="PostgreSQL11配置详解 配置文件位置12345678910111213postgres=# select name, setting from pg_settings where category=&apos;File Locations&apos; ;       name        |                setting                 ------------------">
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Cloudy" type="application/atom+xml">
+
+
+
+
+  <link rel="canonical" href="https://www.cloudyslife.cn/2019/02/15/PostgreSQL配置文件详解/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>PostgreSQL配置文件详解 | Cloudy</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Cloudy</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">Cloudy的自留地</p>
+      
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-sitemap">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/sitemap.xml" rel="section"><i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br>站点地图</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://www.cloudyslife.cn/2019/02/15/PostgreSQL配置文件详解/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Cloudy">
+      <meta itemprop="description" content="Cloudy的自留地">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Cloudy">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">PostgreSQL配置文件详解
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-02-15 14:37:01" itemprop="dateCreated datePublished" datetime="2019-02-15T14:37:01+08:00">2019-02-15</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-03-19 12:10:29" itemprop="dateModified" datetime="2019-03-19T12:10:29+08:00">2019-03-19</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/数据库/" itemprop="url" rel="index"><span itemprop="name">数据库</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+              
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+            
+                <a href="/2019/02/15/PostgreSQL配置文件详解/#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">评论数：</span> <span class="post-comments-count valine-comment-count" data-xid="/2019/02/15/PostgreSQL配置文件详解/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-symbolscount">
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">本文字数：</span>
+                
+                <span title="本文字数">24k</span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">22 分钟</span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>PostgreSQL11配置详解</p>
+<h3 id="配置文件位置"><a href="#配置文件位置" class="headerlink" title="配置文件位置"></a>配置文件位置</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">postgres=# select name, setting from pg_settings where category='File Locations' ;</span><br><span class="line">       name        |                setting                 </span><br><span class="line">-------------------+----------------------------------------</span><br><span class="line"> config_file       | /var/lib/pgsql/11/data/postgresql.conf</span><br><span class="line"> data_directory    | /var/lib/pgsql/11/data</span><br><span class="line"> external_pid_file | </span><br><span class="line"> hba_file          | /var/lib/pgsql/11/data/pg_hba.conf</span><br><span class="line"> ident_file        | /var/lib/pgsql/11/data/pg_ident.conf</span><br><span class="line">(5 rows)</span><br><span class="line"></span><br><span class="line">//使用root权限查找</span><br><span class="line">[root@api data]# find / -name pg_hba.conf</span><br><span class="line">/var/lib/pgsql/11/data/pg_hba.conf</span><br></pre></td></tr></table></figure>
+<a id="more"></a>
+<h3 id="postgresql-conf"><a href="#postgresql-conf" class="headerlink" title="postgresql.conf"></a>postgresql.conf</h3><p>​    该文件包含一些通用设置，比如内存分配，新建database的默认存储位置，PostgreSQL服务器的IP地址，日志的位置以及许多其他设置。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br><span class="line">235</span><br><span class="line">236</span><br><span class="line">237</span><br><span class="line">238</span><br><span class="line">239</span><br><span class="line">240</span><br><span class="line">241</span><br><span class="line">242</span><br><span class="line">243</span><br><span class="line">244</span><br><span class="line">245</span><br><span class="line">246</span><br><span class="line">247</span><br><span class="line">248</span><br><span class="line">249</span><br><span class="line">250</span><br><span class="line">251</span><br><span class="line">252</span><br><span class="line">253</span><br><span class="line">254</span><br><span class="line">255</span><br><span class="line">256</span><br><span class="line">257</span><br><span class="line">258</span><br><span class="line">259</span><br><span class="line">260</span><br><span class="line">261</span><br><span class="line">262</span><br><span class="line">263</span><br><span class="line">264</span><br><span class="line">265</span><br><span class="line">266</span><br><span class="line">267</span><br><span class="line">268</span><br><span class="line">269</span><br><span class="line">270</span><br><span class="line">271</span><br><span class="line">272</span><br><span class="line">273</span><br><span class="line">274</span><br><span class="line">275</span><br><span class="line">276</span><br><span class="line">277</span><br><span class="line">278</span><br><span class="line">279</span><br><span class="line">280</span><br><span class="line">281</span><br><span class="line">282</span><br><span class="line">283</span><br><span class="line">284</span><br><span class="line">285</span><br><span class="line">286</span><br><span class="line">287</span><br><span class="line">288</span><br><span class="line">289</span><br><span class="line">290</span><br><span class="line">291</span><br><span class="line">292</span><br><span class="line">293</span><br><span class="line">294</span><br><span class="line">295</span><br><span class="line">296</span><br><span class="line">297</span><br><span class="line">298</span><br><span class="line">299</span><br><span class="line">300</span><br><span class="line">301</span><br><span class="line">302</span><br><span class="line">303</span><br><span class="line">304</span><br><span class="line">305</span><br><span class="line">306</span><br><span class="line">307</span><br><span class="line">308</span><br><span class="line">309</span><br><span class="line">310</span><br><span class="line">311</span><br><span class="line">312</span><br><span class="line">313</span><br><span class="line">314</span><br><span class="line">315</span><br><span class="line">316</span><br><span class="line">317</span><br><span class="line">318</span><br><span class="line">319</span><br><span class="line">320</span><br><span class="line">321</span><br><span class="line">322</span><br><span class="line">323</span><br><span class="line">324</span><br><span class="line">325</span><br><span class="line">326</span><br><span class="line">327</span><br><span class="line">328</span><br><span class="line">329</span><br><span class="line">330</span><br><span class="line">331</span><br><span class="line">332</span><br><span class="line">333</span><br><span class="line">334</span><br><span class="line">335</span><br><span class="line">336</span><br><span class="line">337</span><br><span class="line">338</span><br><span class="line">339</span><br><span class="line">340</span><br><span class="line">341</span><br><span class="line">342</span><br><span class="line">343</span><br><span class="line">344</span><br><span class="line">345</span><br><span class="line">346</span><br><span class="line">347</span><br><span class="line">348</span><br><span class="line">349</span><br><span class="line">350</span><br><span class="line">351</span><br><span class="line">352</span><br><span class="line">353</span><br><span class="line">354</span><br><span class="line">355</span><br><span class="line">356</span><br><span class="line">357</span><br><span class="line">358</span><br><span class="line">359</span><br><span class="line">360</span><br><span class="line">361</span><br><span class="line">362</span><br><span class="line">363</span><br><span class="line">364</span><br><span class="line">365</span><br><span class="line">366</span><br><span class="line">367</span><br><span class="line">368</span><br><span class="line">369</span><br><span class="line">370</span><br><span class="line">371</span><br><span class="line">372</span><br><span class="line">373</span><br><span class="line">374</span><br><span class="line">375</span><br><span class="line">376</span><br><span class="line">377</span><br><span class="line">378</span><br><span class="line">379</span><br><span class="line">380</span><br><span class="line">381</span><br><span class="line">382</span><br><span class="line">383</span><br><span class="line">384</span><br><span class="line">385</span><br><span class="line">386</span><br><span class="line">387</span><br><span class="line">388</span><br><span class="line">389</span><br><span class="line">390</span><br><span class="line">391</span><br><span class="line">392</span><br><span class="line">393</span><br><span class="line">394</span><br><span class="line">395</span><br><span class="line">396</span><br><span class="line">397</span><br><span class="line">398</span><br><span class="line">399</span><br><span class="line">400</span><br><span class="line">401</span><br><span class="line">402</span><br><span class="line">403</span><br><span class="line">404</span><br><span class="line">405</span><br><span class="line">406</span><br><span class="line">407</span><br><span class="line">408</span><br><span class="line">409</span><br><span class="line">410</span><br><span class="line">411</span><br><span class="line">412</span><br><span class="line">413</span><br><span class="line">414</span><br><span class="line">415</span><br><span class="line">416</span><br><span class="line">417</span><br><span class="line">418</span><br><span class="line">419</span><br><span class="line">420</span><br><span class="line">421</span><br><span class="line">422</span><br><span class="line">423</span><br><span class="line">424</span><br><span class="line">425</span><br><span class="line">426</span><br><span class="line">427</span><br><span class="line">428</span><br><span class="line">429</span><br><span class="line">430</span><br><span class="line">431</span><br><span class="line">432</span><br><span class="line">433</span><br><span class="line">434</span><br><span class="line">435</span><br><span class="line">436</span><br><span class="line">437</span><br><span class="line">438</span><br><span class="line">439</span><br><span class="line">440</span><br><span class="line">441</span><br><span class="line">442</span><br><span class="line">443</span><br><span class="line">444</span><br><span class="line">445</span><br><span class="line">446</span><br><span class="line">447</span><br><span class="line">448</span><br><span class="line">449</span><br><span class="line">450</span><br><span class="line">451</span><br><span class="line">452</span><br><span class="line">453</span><br><span class="line">454</span><br><span class="line">455</span><br><span class="line">456</span><br><span class="line">457</span><br><span class="line">458</span><br><span class="line">459</span><br><span class="line">460</span><br><span class="line">461</span><br><span class="line">462</span><br><span class="line">463</span><br><span class="line">464</span><br><span class="line">465</span><br><span class="line">466</span><br><span class="line">467</span><br><span class="line">468</span><br><span class="line">469</span><br><span class="line">470</span><br><span class="line">471</span><br><span class="line">472</span><br><span class="line">473</span><br><span class="line">474</span><br><span class="line">475</span><br><span class="line">476</span><br><span class="line">477</span><br><span class="line">478</span><br><span class="line">479</span><br><span class="line">480</span><br><span class="line">481</span><br><span class="line">482</span><br><span class="line">483</span><br><span class="line">484</span><br><span class="line">485</span><br><span class="line">486</span><br><span class="line">487</span><br><span class="line">488</span><br><span class="line">489</span><br><span class="line">490</span><br><span class="line">491</span><br><span class="line">492</span><br><span class="line">493</span><br><span class="line">494</span><br><span class="line">495</span><br><span class="line">496</span><br><span class="line">497</span><br><span class="line">498</span><br><span class="line">499</span><br><span class="line">500</span><br><span class="line">501</span><br><span class="line">502</span><br><span class="line">503</span><br><span class="line">504</span><br><span class="line">505</span><br><span class="line">506</span><br><span class="line">507</span><br><span class="line">508</span><br><span class="line">509</span><br><span class="line">510</span><br><span class="line">511</span><br><span class="line">512</span><br><span class="line">513</span><br><span class="line">514</span><br><span class="line">515</span><br><span class="line">516</span><br><span class="line">517</span><br><span class="line">518</span><br><span class="line">519</span><br><span class="line">520</span><br><span class="line">521</span><br><span class="line">522</span><br><span class="line">523</span><br><span class="line">524</span><br><span class="line">525</span><br><span class="line">526</span><br><span class="line">527</span><br><span class="line">528</span><br><span class="line">529</span><br><span class="line">530</span><br><span class="line">531</span><br><span class="line">532</span><br><span class="line">533</span><br><span class="line">534</span><br><span class="line">535</span><br><span class="line">536</span><br><span class="line">537</span><br><span class="line">538</span><br><span class="line">539</span><br><span class="line">540</span><br><span class="line">541</span><br><span class="line">542</span><br><span class="line">543</span><br><span class="line">544</span><br><span class="line">545</span><br><span class="line">546</span><br><span class="line">547</span><br><span class="line">548</span><br><span class="line">549</span><br><span class="line">550</span><br><span class="line">551</span><br><span class="line">552</span><br><span class="line">553</span><br><span class="line">554</span><br><span class="line">555</span><br><span class="line">556</span><br><span class="line">557</span><br><span class="line">558</span><br><span class="line">559</span><br><span class="line">560</span><br><span class="line">561</span><br><span class="line">562</span><br><span class="line">563</span><br><span class="line">564</span><br><span class="line">565</span><br><span class="line">566</span><br><span class="line">567</span><br><span class="line">568</span><br><span class="line">569</span><br><span class="line">570</span><br><span class="line">571</span><br><span class="line">572</span><br><span class="line">573</span><br><span class="line">574</span><br><span class="line">575</span><br><span class="line">576</span><br><span class="line">577</span><br><span class="line">578</span><br><span class="line">579</span><br><span class="line">580</span><br><span class="line">581</span><br><span class="line">582</span><br><span class="line">583</span><br><span class="line">584</span><br><span class="line">585</span><br><span class="line">586</span><br><span class="line">587</span><br><span class="line">588</span><br><span class="line">589</span><br><span class="line">590</span><br><span class="line">591</span><br><span class="line">592</span><br><span class="line">593</span><br><span class="line">594</span><br><span class="line">595</span><br><span class="line">596</span><br><span class="line">597</span><br><span class="line">598</span><br><span class="line">599</span><br><span class="line">600</span><br><span class="line">601</span><br><span class="line">602</span><br><span class="line">603</span><br><span class="line">604</span><br><span class="line">605</span><br><span class="line">606</span><br><span class="line">607</span><br><span class="line">608</span><br><span class="line">609</span><br><span class="line">610</span><br><span class="line">611</span><br><span class="line">612</span><br><span class="line">613</span><br><span class="line">614</span><br><span class="line">615</span><br><span class="line">616</span><br><span class="line">617</span><br><span class="line">618</span><br><span class="line">619</span><br><span class="line">620</span><br><span class="line">621</span><br><span class="line">622</span><br><span class="line">623</span><br><span class="line">624</span><br><span class="line">625</span><br><span class="line">626</span><br><span class="line">627</span><br><span class="line">628</span><br><span class="line">629</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> - Connection Settings -</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash">listen_addresses = <span class="string">'localhost'</span> <span class="comment">#默认只允许本地访问，*为所有人访问</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash">port = 5432</span></span><br><span class="line">max_connections = 100 #确定到数据库服务器的最大并发连接数。 缺省值通常为100个连接，但如果您的内核设置不支持它（在initdb期间确定），则可能会更少。运行备用服务器（即为从库）时，必须将此参数设置为与主服务器上相同或更高的值。 否则，查询将不被允许在备用服务器中</span><br><span class="line"><span class="meta">#</span><span class="bash">superuser_reserved_connections = 3 <span class="comment">#确定为PostgreSQL超级用户连接保留的连接“插槽”的数量。 最多max_connections连接可以同时活动。 只要活动并发连接的数量至少为max_connections minus superuser_reserved_connections，新连接将仅被超级用户接受，并且不会接受新的复制连接。默认值是三个连接。该值必须小于max_connections的值。</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash">unix_socket_directories = <span class="string">'/var/run/postgresql, /tmp'</span>	<span class="comment"># comma-separated list of directories</span></span></span><br><span class="line">					# (change requires restart)</span><br><span class="line"><span class="meta">#</span><span class="bash">unix_socket_group = <span class="string">''</span>			<span class="comment"># (change requires restart)</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash">unix_socket_permissions = 0777		<span class="comment"># begin with 0 to use octal notation</span></span></span><br><span class="line">					# (change requires restart)</span><br><span class="line"><span class="meta">#</span><span class="bash">bonjour = off				<span class="comment"># advertise server via Bonjour</span></span></span><br><span class="line">					# (change requires restart)</span><br><span class="line"><span class="meta">#</span><span class="bash">bonjour_name = <span class="string">''</span>			<span class="comment"># defaults to the computer name</span></span></span><br><span class="line">					# (change requires restart)</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> - TCP Keepalives -</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> see <span class="string">"man 7 tcp"</span> <span class="keyword">for</span> details</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash">tcp_keepalives_idle = 0		<span class="comment"># TCP_KEEPIDLE, in seconds;</span></span></span><br><span class="line">					# 0 selects the system default</span><br><span class="line"><span class="meta">#</span><span class="bash">tcp_keepalives_interval = 0		<span class="comment"># TCP_KEEPINTVL, in seconds;</span></span></span><br><span class="line">					# 0 selects the system default</span><br><span class="line"><span class="meta">#</span><span class="bash">tcp_keepalives_count = 0		<span class="comment"># TCP_KEEPCNT;</span></span></span><br><span class="line">					# 0 selects the system default</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> - Authentication -</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash">authentication_timeout = 1min		<span class="comment"># 1s-600s</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash">password_encryption = md5		<span class="comment"># md5 or scram-sha-256</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash">db_user_namespace = off</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> GSSAPI using Kerberos</span></span><br><span class="line"><span class="meta">#</span><span class="bash">krb_server_keyfile = <span class="string">''</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash">krb_caseins_users = off</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> - SSL -</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash">ssl = off</span></span><br><span class="line"><span class="meta">#</span><span class="bash">ssl_ca_file = <span class="string">''</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash">ssl_cert_file = <span class="string">'server.crt'</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash">ssl_crl_file = <span class="string">''</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash">ssl_key_file = <span class="string">'server.key'</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash">ssl_ciphers = <span class="string">'HIGH:MEDIUM:+3DES:!aNULL'</span> <span class="comment"># allowed SSL ciphers</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash">ssl_prefer_server_ciphers = on</span></span><br><span class="line"><span class="meta">#</span><span class="bash">ssl_ecdh_curve = <span class="string">'prime256v1'</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash">ssl_dh_params_file = <span class="string">''</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash">ssl_passphrase_command = <span class="string">''</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash">ssl_passphrase_command_supports_reload = off</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash">------------------------------------------------------------------------------</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> RESOURCE USAGE (except WAL)</span></span><br><span class="line"><span class="meta">#</span><span class="bash">------------------------------------------------------------------------------</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> - Memory -</span></span><br><span class="line"></span><br><span class="line">shared_buffers = 128MB			# min 128kB</span><br><span class="line">					# (change requires restart)</span><br><span class="line"><span class="meta">#</span><span class="bash">huge_pages = try			<span class="comment"># on, off, or try</span></span></span><br><span class="line">					# (change requires restart)</span><br><span class="line"><span class="meta">#</span><span class="bash">temp_buffers = 8MB			<span class="comment"># min 800kB</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash">max_prepared_transactions = 0		<span class="comment"># zero disables the feature</span></span></span><br><span class="line">					# (change requires restart)</span><br><span class="line"><span class="meta">#</span><span class="bash"> Caution: it is not advisable to <span class="built_in">set</span> max_prepared_transactions nonzero unless</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> you actively intend to use prepared transactions.</span></span><br><span class="line"><span class="meta">#</span><span class="bash">work_mem = 4MB				<span class="comment"># min 64kB</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash">maintenance_work_mem = 64MB		<span class="comment"># min 1MB</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash">autovacuum_work_mem = -1		<span class="comment"># min 1MB, or -1 to use maintenance_work_mem</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash">max_stack_depth = 2MB			<span class="comment"># min 100kB</span></span></span><br><span class="line">dynamic_shared_memory_type = posix	# the default is the first option</span><br><span class="line">					# supported by the operating system:</span><br><span class="line">					#   posix</span><br><span class="line">					#   sysv</span><br><span class="line">					#   windows</span><br><span class="line">					#   mmap</span><br><span class="line">					# use none to disable dynamic shared memory</span><br><span class="line">					# (change requires restart)</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> - Disk -</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash">temp_file_limit = -1			<span class="comment"># limits per-process temp file space</span></span></span><br><span class="line">					# in kB, or -1 for no limit</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> - Kernel Resources -</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash">max_files_per_process = 1000		<span class="comment"># min 25</span></span></span><br><span class="line">					# (change requires restart)</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> - Cost-Based Vacuum Delay -</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash">vacuum_cost_delay = 0			<span class="comment"># 0-100 milliseconds</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash">vacuum_cost_page_hit = 1		<span class="comment"># 0-10000 credits</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash">vacuum_cost_page_miss = 10		<span class="comment"># 0-10000 credits</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash">vacuum_cost_page_dirty = 20		<span class="comment"># 0-10000 credits</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash">vacuum_cost_limit = 200		<span class="comment"># 1-10000 credits</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> - Background Writer -</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash">bgwriter_delay = 200ms			<span class="comment"># 10-10000ms between rounds</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash">bgwriter_lru_maxpages = 100		<span class="comment"># max buffers written/round, 0 disables</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash">bgwriter_lru_multiplier = 2.0		<span class="comment"># 0-10.0 multiplier on buffers scanned/round</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash">bgwriter_flush_after = 512kB		<span class="comment"># measured in pages, 0 disables</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> - Asynchronous Behavior -</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash">effective_io_concurrency = 1		<span class="comment"># 1-1000; 0 disables prefetching</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash">max_worker_processes = 8		<span class="comment"># (change requires restart)</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash">max_parallel_maintenance_workers = 2	<span class="comment"># taken from max_parallel_workers</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash">max_parallel_workers_per_gather = 2	<span class="comment"># taken from max_parallel_workers</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash">parallel_leader_participation = on</span></span><br><span class="line"><span class="meta">#</span><span class="bash">max_parallel_workers = 8		<span class="comment"># maximum number of max_worker_processes that</span></span></span><br><span class="line">					# can be used in parallel operations</span><br><span class="line"><span class="meta">#</span><span class="bash">old_snapshot_threshold = -1		<span class="comment"># 1min-60d; -1 disables; 0 is immediate</span></span></span><br><span class="line">					# (change requires restart)</span><br><span class="line"><span class="meta">#</span><span class="bash">backend_flush_after = 0		<span class="comment"># measured in pages, 0 disables</span></span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash">------------------------------------------------------------------------------</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> WRITE-AHEAD LOG</span></span><br><span class="line"><span class="meta">#</span><span class="bash">------------------------------------------------------------------------------</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> - Settings -</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash">wal_level = replica			<span class="comment"># minimal, replica, or logical</span></span></span><br><span class="line">					# (change requires restart)</span><br><span class="line"><span class="meta">#</span><span class="bash">fsync = on				<span class="comment"># flush data to disk for crash safety</span></span></span><br><span class="line">					# (turning this off can cause</span><br><span class="line">					# unrecoverable data corruption)</span><br><span class="line"><span class="meta">#</span><span class="bash">synchronous_commit = on		<span class="comment"># synchronization level;</span></span></span><br><span class="line">					# off, local, remote_write, remote_apply, or on</span><br><span class="line"><span class="meta">#</span><span class="bash">wal_sync_method = fsync		<span class="comment"># the default is the first option</span></span></span><br><span class="line">					# supported by the operating system:</span><br><span class="line">					#   open_datasync</span><br><span class="line">					#   fdatasync (default on Linux)</span><br><span class="line">					#   fsync</span><br><span class="line">					#   fsync_writethrough</span><br><span class="line">					#   open_sync</span><br><span class="line"><span class="meta">#</span><span class="bash">full_page_writes = on			<span class="comment"># recover from partial page writes</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash">wal_compression = off			<span class="comment"># enable compression of full-page writes</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash">wal_log_hints = off			<span class="comment"># also do full page writes of non-critical updates</span></span></span><br><span class="line">					# (change requires restart)</span><br><span class="line"><span class="meta">#</span><span class="bash">wal_buffers = -1			<span class="comment"># min 32kB, -1 sets based on shared_buffers</span></span></span><br><span class="line">					# (change requires restart)</span><br><span class="line"><span class="meta">#</span><span class="bash">wal_writer_delay = 200ms		<span class="comment"># 1-10000 milliseconds</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash">wal_writer_flush_after = 1MB		<span class="comment"># measured in pages, 0 disables</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash">commit_delay = 0			<span class="comment"># range 0-100000, in microseconds</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash">commit_siblings = 5			<span class="comment"># range 1-1000</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> - Checkpoints -</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash">checkpoint_timeout = 5min		<span class="comment"># range 30s-1d</span></span></span><br><span class="line">max_wal_size = 1GB</span><br><span class="line">min_wal_size = 80MB</span><br><span class="line"><span class="meta">#</span><span class="bash">checkpoint_completion_target = 0.5	<span class="comment"># checkpoint target duration, 0.0 - 1.0</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash">checkpoint_flush_after = 256kB		<span class="comment"># measured in pages, 0 disables</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash">checkpoint_warning = 30s		<span class="comment"># 0 disables</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> - Archiving -</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash">archive_mode = off		<span class="comment"># enables archiving; off, on, or always</span></span></span><br><span class="line">				# (change requires restart)</span><br><span class="line"><span class="meta">#</span><span class="bash">archive_command = <span class="string">''</span>		<span class="comment"># command to use to archive a logfile segment</span></span></span><br><span class="line">				# placeholders: %p = path of file to archive</span><br><span class="line">				#               %f = file name only</span><br><span class="line">				# e.g. 'test ! -f /mnt/server/archivedir/%f &amp;&amp; cp %p /mnt/server/archivedir/%f'</span><br><span class="line"><span class="meta">#</span><span class="bash">archive_timeout = 0		<span class="comment"># force a logfile segment switch after this</span></span></span><br><span class="line">				# number of seconds; 0 disables</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash">------------------------------------------------------------------------------</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> REPLICATION</span></span><br><span class="line"><span class="meta">#</span><span class="bash">------------------------------------------------------------------------------</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> - Sending Servers -</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> Set these on the master and on any standby that will send replication data.</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash">max_wal_senders = 10		<span class="comment"># max number of walsender processes</span></span></span><br><span class="line">				# (change requires restart)</span><br><span class="line"><span class="meta">#</span><span class="bash">wal_keep_segments = 0		<span class="comment"># in logfile segments; 0 disables</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash">wal_sender_timeout = 60s	<span class="comment"># in milliseconds; 0 disables</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash">max_replication_slots = 10	<span class="comment"># max number of replication slots</span></span></span><br><span class="line">				# (change requires restart)</span><br><span class="line"><span class="meta">#</span><span class="bash">track_commit_timestamp = off	<span class="comment"># collect timestamp of transaction commit</span></span></span><br><span class="line">				# (change requires restart)</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> - Master Server -</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> These settings are ignored on a standby server.</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash">synchronous_standby_names = <span class="string">''</span>	<span class="comment"># standby servers that provide sync rep</span></span></span><br><span class="line">				# method to choose sync standbys, number of sync standbys,</span><br><span class="line">				# and comma-separated list of application_name</span><br><span class="line">				# from standby(s); '*' = all</span><br><span class="line"><span class="meta">#</span><span class="bash">vacuum_defer_cleanup_age = 0	<span class="comment"># number of xacts by which cleanup is delayed</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> - Standby Servers -</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> These settings are ignored on a master server.</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash">hot_standby = on			<span class="comment"># "off" disallows queries during recovery</span></span></span><br><span class="line">					# (change requires restart)</span><br><span class="line"><span class="meta">#</span><span class="bash">max_standby_archive_delay = 30s	<span class="comment"># max delay before canceling queries</span></span></span><br><span class="line">					# when reading WAL from archive;</span><br><span class="line">					# -1 allows indefinite delay</span><br><span class="line"><span class="meta">#</span><span class="bash">max_standby_streaming_delay = 30s	<span class="comment"># max delay before canceling queries</span></span></span><br><span class="line">					# when reading streaming WAL;</span><br><span class="line">					# -1 allows indefinite delay</span><br><span class="line"><span class="meta">#</span><span class="bash">wal_receiver_status_interval = 10s	<span class="comment"># send replies at least this often</span></span></span><br><span class="line">					# 0 disables</span><br><span class="line"><span class="meta">#</span><span class="bash">hot_standby_feedback = off		<span class="comment"># send info from standby to prevent</span></span></span><br><span class="line">					# query conflicts</span><br><span class="line"><span class="meta">#</span><span class="bash">wal_receiver_timeout = 60s		<span class="comment"># time that receiver waits for</span></span></span><br><span class="line">					# communication from master</span><br><span class="line">					# in milliseconds; 0 disables</span><br><span class="line"><span class="meta">#</span><span class="bash">wal_retrieve_retry_interval = 5s	<span class="comment"># time to wait before retrying to</span></span></span><br><span class="line">					# retrieve WAL after a failed attempt</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> - Subscribers -</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> These settings are ignored on a publisher.</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash">max_logical_replication_workers = 4	<span class="comment"># taken from max_worker_processes</span></span></span><br><span class="line">					# (change requires restart)</span><br><span class="line"><span class="meta">#</span><span class="bash">max_sync_workers_per_subscription = 2	<span class="comment"># taken from max_logical_replication_workers</span></span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash">------------------------------------------------------------------------------</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> QUERY TUNING</span></span><br><span class="line"><span class="meta">#</span><span class="bash">------------------------------------------------------------------------------</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> - Planner Method Configuration -</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash">enable_bitmapscan = on</span></span><br><span class="line"><span class="meta">#</span><span class="bash">enable_hashagg = on</span></span><br><span class="line"><span class="meta">#</span><span class="bash">enable_hashjoin = on</span></span><br><span class="line"><span class="meta">#</span><span class="bash">enable_indexscan = on</span></span><br><span class="line"><span class="meta">#</span><span class="bash">enable_indexonlyscan = on</span></span><br><span class="line"><span class="meta">#</span><span class="bash">enable_material = on</span></span><br><span class="line"><span class="meta">#</span><span class="bash">enable_mergejoin = on</span></span><br><span class="line"><span class="meta">#</span><span class="bash">enable_nestloop = on</span></span><br><span class="line"><span class="meta">#</span><span class="bash">enable_parallel_append = on</span></span><br><span class="line"><span class="meta">#</span><span class="bash">enable_seqscan = on</span></span><br><span class="line"><span class="meta">#</span><span class="bash">enable_sort = on</span></span><br><span class="line"><span class="meta">#</span><span class="bash">enable_tidscan = on</span></span><br><span class="line"><span class="meta">#</span><span class="bash">enable_partitionwise_join = off</span></span><br><span class="line"><span class="meta">#</span><span class="bash">enable_partitionwise_aggregate = off</span></span><br><span class="line"><span class="meta">#</span><span class="bash">enable_parallel_hash = on</span></span><br><span class="line"><span class="meta">#</span><span class="bash">enable_partition_pruning = on</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> - Planner Cost Constants -</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash">seq_page_cost = 1.0			<span class="comment"># measured on an arbitrary scale</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash">random_page_cost = 4.0			<span class="comment"># same scale as above</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash">cpu_tuple_cost = 0.01			<span class="comment"># same scale as above</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash">cpu_index_tuple_cost = 0.005		<span class="comment"># same scale as above</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash">cpu_operator_cost = 0.0025		<span class="comment"># same scale as above</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash">parallel_tuple_cost = 0.1		<span class="comment"># same scale as above</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash">parallel_setup_cost = 1000.0	<span class="comment"># same scale as above</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash">jit_above_cost = 100000		<span class="comment"># perform JIT compilation if available</span></span></span><br><span class="line">					# and query more expensive than this;</span><br><span class="line">					# -1 disables</span><br><span class="line"><span class="meta">#</span><span class="bash">jit_inline_above_cost = 500000		<span class="comment"># inline small functions if query is</span></span></span><br><span class="line">					# more expensive than this; -1 disables</span><br><span class="line"><span class="meta">#</span><span class="bash">jit_optimize_above_cost = 500000	<span class="comment"># use expensive JIT optimizations if</span></span></span><br><span class="line">					# query is more expensive than this;</span><br><span class="line">					# -1 disables</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash">min_parallel_table_scan_size = 8MB</span></span><br><span class="line"><span class="meta">#</span><span class="bash">min_parallel_index_scan_size = 512kB</span></span><br><span class="line"><span class="meta">#</span><span class="bash">effective_cache_size = 4GB</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> - Genetic Query Optimizer -</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash">geqo = on</span></span><br><span class="line"><span class="meta">#</span><span class="bash">geqo_threshold = 12</span></span><br><span class="line"><span class="meta">#</span><span class="bash">geqo_effort = 5			<span class="comment"># range 1-10</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash">geqo_pool_size = 0			<span class="comment"># selects default based on effort</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash">geqo_generations = 0			<span class="comment"># selects default based on effort</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash">geqo_selection_bias = 2.0		<span class="comment"># range 1.5-2.0</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash">geqo_seed = 0.0			<span class="comment"># range 0.0-1.0</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> - Other Planner Options -</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash">default_statistics_target = 100	<span class="comment"># range 1-10000</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash">constraint_exclusion = partition	<span class="comment"># on, off, or partition</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash">cursor_tuple_fraction = 0.1		<span class="comment"># range 0.0-1.0</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash">from_collapse_limit = 8</span></span><br><span class="line"><span class="meta">#</span><span class="bash">join_collapse_limit = 8		<span class="comment"># 1 disables collapsing of explicit</span></span></span><br><span class="line">					# JOIN clauses</span><br><span class="line"><span class="meta">#</span><span class="bash">force_parallel_mode = off</span></span><br><span class="line"><span class="meta">#</span><span class="bash">jit = off				<span class="comment"># allow JIT compilation</span></span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash">------------------------------------------------------------------------------</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> REPORTING AND LOGGING</span></span><br><span class="line"><span class="meta">#</span><span class="bash">------------------------------------------------------------------------------</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> - Where to Log -</span></span><br><span class="line"></span><br><span class="line">log_destination = 'stderr'		# Valid values are combinations of</span><br><span class="line">					# stderr, csvlog, syslog, and eventlog,</span><br><span class="line">					# depending on platform.  csvlog</span><br><span class="line">					# requires logging_collector to be on.</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> This is used when logging to stderr:</span></span><br><span class="line">logging_collector = on			# Enable capturing of stderr and csvlog</span><br><span class="line">					# into log files. Required to be on for</span><br><span class="line">					# csvlogs.</span><br><span class="line">					# (change requires restart)</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> These are only used <span class="keyword">if</span> logging_collector is on:</span></span><br><span class="line">log_directory = 'log'			# directory where log files are written,</span><br><span class="line">					# can be absolute or relative to PGDATA</span><br><span class="line">log_filename = 'postgresql-%a.log'	# log file name pattern,</span><br><span class="line">					# can include strftime() escapes</span><br><span class="line"><span class="meta">#</span><span class="bash">log_file_mode = 0600			<span class="comment"># creation mode for log files,</span></span></span><br><span class="line">					# begin with 0 to use octal notation</span><br><span class="line">log_truncate_on_rotation = on		# If on, an existing log file with the</span><br><span class="line">					# same name as the new log file will be</span><br><span class="line">					# truncated rather than appended to.</span><br><span class="line">					# But such truncation only occurs on</span><br><span class="line">					# time-driven rotation, not on restarts</span><br><span class="line">					# or size-driven rotation.  Default is</span><br><span class="line">					# off, meaning append to existing files</span><br><span class="line">					# in all cases.</span><br><span class="line">log_rotation_age = 1d			# Automatic rotation of logfiles will</span><br><span class="line">					# happen after that time.  0 disables.</span><br><span class="line">log_rotation_size = 0			# Automatic rotation of logfiles will</span><br><span class="line">					# happen after that much log output.</span><br><span class="line">					# 0 disables.</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> These are relevant when logging to syslog:</span></span><br><span class="line"><span class="meta">#</span><span class="bash">syslog_facility = <span class="string">'LOCAL0'</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash">syslog_ident = <span class="string">'postgres'</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash">syslog_sequence_numbers = on</span></span><br><span class="line"><span class="meta">#</span><span class="bash">syslog_split_messages = on</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> This is only relevant when logging to eventlog (win32):</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> (change requires restart)</span></span><br><span class="line"><span class="meta">#</span><span class="bash">event_source = <span class="string">'PostgreSQL'</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> - When to Log -</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash">client_min_messages = notice		<span class="comment"># values in order of decreasing detail:</span></span></span><br><span class="line">					#   debug5</span><br><span class="line">					#   debug4</span><br><span class="line">					#   debug3</span><br><span class="line">					#   debug2</span><br><span class="line">					#   debug1</span><br><span class="line">					#   log</span><br><span class="line">					#   notice</span><br><span class="line">					#   warning</span><br><span class="line">					#   error</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash">log_min_messages = warning		<span class="comment"># values in order of decreasing detail:</span></span></span><br><span class="line">					#   debug5</span><br><span class="line">					#   debug4</span><br><span class="line">					#   debug3</span><br><span class="line">					#   debug2</span><br><span class="line">					#   debug1</span><br><span class="line">					#   info</span><br><span class="line">					#   notice</span><br><span class="line">					#   warning</span><br><span class="line">					#   error</span><br><span class="line">					#   log</span><br><span class="line">					#   fatal</span><br><span class="line">					#   panic</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash">log_min_error_statement = error	<span class="comment"># values in order of decreasing detail:</span></span></span><br><span class="line">					#   debug5</span><br><span class="line">					#   debug4</span><br><span class="line">					#   debug3</span><br><span class="line">					#   debug2</span><br><span class="line">					#   debug1</span><br><span class="line">					#   info</span><br><span class="line">					#   notice</span><br><span class="line">					#   warning</span><br><span class="line">					#   error</span><br><span class="line">					#   log</span><br><span class="line">					#   fatal</span><br><span class="line">					#   panic (effectively off)</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash">log_min_duration_statement = -1	<span class="comment"># -1 is disabled, 0 logs all statements</span></span></span><br><span class="line">					# and their durations, &gt; 0 logs only</span><br><span class="line">					# statements running at least this number</span><br><span class="line">					# of milliseconds</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> - What to Log -</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash">debug_print_parse = off</span></span><br><span class="line"><span class="meta">#</span><span class="bash">debug_print_rewritten = off</span></span><br><span class="line"><span class="meta">#</span><span class="bash">debug_print_plan = off</span></span><br><span class="line"><span class="meta">#</span><span class="bash">debug_pretty_print = on</span></span><br><span class="line"><span class="meta">#</span><span class="bash">log_checkpoints = off</span></span><br><span class="line"><span class="meta">#</span><span class="bash">log_connections = off</span></span><br><span class="line"><span class="meta">#</span><span class="bash">log_disconnections = off</span></span><br><span class="line"><span class="meta">#</span><span class="bash">log_duration = off</span></span><br><span class="line"><span class="meta">#</span><span class="bash">log_error_verbosity = default		<span class="comment"># terse, default, or verbose messages</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash">log_hostname = off</span></span><br><span class="line">log_line_prefix = '%m [%p] '		# special values:</span><br><span class="line">					#   %a = application name</span><br><span class="line">					#   %u = user name</span><br><span class="line">					#   %d = database name</span><br><span class="line">					#   %r = remote host and port</span><br><span class="line">					#   %h = remote host</span><br><span class="line">					#   %p = process ID</span><br><span class="line">					#   %t = timestamp without milliseconds</span><br><span class="line">					#   %m = timestamp with milliseconds</span><br><span class="line">					#   %n = timestamp with milliseconds (as a Unix epoch)</span><br><span class="line">					#   %i = command tag</span><br><span class="line">					#   %e = SQL state</span><br><span class="line">					#   %c = session ID</span><br><span class="line">					#   %l = session line number</span><br><span class="line">					#   %s = session start timestamp</span><br><span class="line">					#   %v = virtual transaction ID</span><br><span class="line">					#   %x = transaction ID (0 if none)</span><br><span class="line">					#   %q = stop here in non-session</span><br><span class="line">					#        processes</span><br><span class="line">					#   %% = '%'</span><br><span class="line">					# e.g. '&lt;%u%%%d&gt; '</span><br><span class="line"><span class="meta">#</span><span class="bash">log_lock_waits = off			<span class="comment"># log lock waits &gt;= deadlock_timeout</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash">log_statement = <span class="string">'none'</span>			<span class="comment"># none, ddl, mod, all</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash">log_replication_commands = off</span></span><br><span class="line"><span class="meta">#</span><span class="bash">log_temp_files = -1			<span class="comment"># log temporary files equal or larger</span></span></span><br><span class="line">					# than the specified size in kilobytes;</span><br><span class="line">					# -1 disables, 0 logs all temp files</span><br><span class="line">log_timezone = 'UTC'</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash">------------------------------------------------------------------------------</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> PROCESS TITLE</span></span><br><span class="line"><span class="meta">#</span><span class="bash">------------------------------------------------------------------------------</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash">cluster_name = <span class="string">''</span>			<span class="comment"># added to process titles if nonempty</span></span></span><br><span class="line">					# (change requires restart)</span><br><span class="line"><span class="meta">#</span><span class="bash">update_process_title = on</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash">------------------------------------------------------------------------------</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> STATISTICS</span></span><br><span class="line"><span class="meta">#</span><span class="bash">------------------------------------------------------------------------------</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> - Query and Index Statistics Collector -</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash">track_activities = on</span></span><br><span class="line"><span class="meta">#</span><span class="bash">track_counts = on</span></span><br><span class="line"><span class="meta">#</span><span class="bash">track_io_timing = off</span></span><br><span class="line"><span class="meta">#</span><span class="bash">track_functions = none			<span class="comment"># none, pl, all</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash">track_activity_query_size = 1024	<span class="comment"># (change requires restart)</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash">stats_temp_directory = <span class="string">'pg_stat_tmp'</span></span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> - Monitoring -</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash">log_parser_stats = off</span></span><br><span class="line"><span class="meta">#</span><span class="bash">log_planner_stats = off</span></span><br><span class="line"><span class="meta">#</span><span class="bash">log_executor_stats = off</span></span><br><span class="line"><span class="meta">#</span><span class="bash">log_statement_stats = off</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash">------------------------------------------------------------------------------</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> AUTOVACUUM</span></span><br><span class="line"><span class="meta">#</span><span class="bash">------------------------------------------------------------------------------</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash">autovacuum = on			<span class="comment"># Enable autovacuum subprocess?  'on'</span></span></span><br><span class="line">					# requires track_counts to also be on.</span><br><span class="line"><span class="meta">#</span><span class="bash">log_autovacuum_min_duration = -1	<span class="comment"># -1 disables, 0 logs all actions and</span></span></span><br><span class="line">					# their durations, &gt; 0 logs only</span><br><span class="line">					# actions running at least this number</span><br><span class="line">					# of milliseconds.</span><br><span class="line"><span class="meta">#</span><span class="bash">autovacuum_max_workers = 3		<span class="comment"># max number of autovacuum subprocesses</span></span></span><br><span class="line">					# (change requires restart)</span><br><span class="line"><span class="meta">#</span><span class="bash">autovacuum_naptime = 1min		<span class="comment"># time between autovacuum runs</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash">autovacuum_vacuum_threshold = 50	<span class="comment"># min number of row updates before</span></span></span><br><span class="line">					# vacuum</span><br><span class="line"><span class="meta">#</span><span class="bash">autovacuum_analyze_threshold = 50	<span class="comment"># min number of row updates before</span></span></span><br><span class="line">					# analyze</span><br><span class="line"><span class="meta">#</span><span class="bash">autovacuum_vacuum_scale_factor = 0.2	<span class="comment"># fraction of table size before vacuum</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash">autovacuum_analyze_scale_factor = 0.1	<span class="comment"># fraction of table size before analyze</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash">autovacuum_freeze_max_age = 200000000	<span class="comment"># maximum XID age before forced vacuum</span></span></span><br><span class="line">					# (change requires restart)</span><br><span class="line"><span class="meta">#</span><span class="bash">autovacuum_multixact_freeze_max_age = 400000000	<span class="comment"># maximum multixact age</span></span></span><br><span class="line">					# before forced vacuum</span><br><span class="line">					# (change requires restart)</span><br><span class="line"><span class="meta">#</span><span class="bash">autovacuum_vacuum_cost_delay = 20ms	<span class="comment"># default vacuum cost delay for</span></span></span><br><span class="line">					# autovacuum, in milliseconds;</span><br><span class="line">					# -1 means use vacuum_cost_delay</span><br><span class="line"><span class="meta">#</span><span class="bash">autovacuum_vacuum_cost_limit = -1	<span class="comment"># default vacuum cost limit for</span></span></span><br><span class="line">					# autovacuum, -1 means use</span><br><span class="line">					# vacuum_cost_limit</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash">------------------------------------------------------------------------------</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> CLIENT CONNECTION DEFAULTS</span></span><br><span class="line"><span class="meta">#</span><span class="bash">------------------------------------------------------------------------------</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> - Statement Behavior -</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash">search_path = <span class="string">'"$user", public'</span>	<span class="comment"># schema names</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash">row_security = on</span></span><br><span class="line"><span class="meta">#</span><span class="bash">default_tablespace = <span class="string">''</span>		<span class="comment"># a tablespace name, '' uses the default</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash">temp_tablespaces = <span class="string">''</span>			<span class="comment"># a list of tablespace names, '' uses</span></span></span><br><span class="line">					# only default tablespace</span><br><span class="line"><span class="meta">#</span><span class="bash">check_function_bodies = on</span></span><br><span class="line"><span class="meta">#</span><span class="bash">default_transaction_isolation = <span class="string">'read committed'</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash">default_transaction_read_only = off</span></span><br><span class="line"><span class="meta">#</span><span class="bash">default_transaction_deferrable = off</span></span><br><span class="line"><span class="meta">#</span><span class="bash">session_replication_role = <span class="string">'origin'</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash">statement_timeout = 0			<span class="comment"># in milliseconds, 0 is disabled</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash">lock_timeout = 0			<span class="comment"># in milliseconds, 0 is disabled</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash">idle_in_transaction_session_timeout = 0	<span class="comment"># in milliseconds, 0 is disabled</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash">vacuum_freeze_min_age = 50000000</span></span><br><span class="line"><span class="meta">#</span><span class="bash">vacuum_freeze_table_age = 150000000</span></span><br><span class="line"><span class="meta">#</span><span class="bash">vacuum_multixact_freeze_min_age = 5000000</span></span><br><span class="line"><span class="meta">#</span><span class="bash">vacuum_multixact_freeze_table_age = 150000000</span></span><br><span class="line"><span class="meta">#</span><span class="bash">vacuum_cleanup_index_scale_factor = 0.1	<span class="comment"># fraction of total number of tuples</span></span></span><br><span class="line">						# before index cleanup, 0 always performs</span><br><span class="line">						# index cleanup</span><br><span class="line"><span class="meta">#</span><span class="bash">bytea_output = <span class="string">'hex'</span>			<span class="comment"># hex, escape</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash">xmlbinary = <span class="string">'base64'</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash">xmloption = <span class="string">'content'</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash">gin_fuzzy_search_limit = 0</span></span><br><span class="line"><span class="meta">#</span><span class="bash">gin_pending_list_limit = 4MB</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> - Locale and Formatting -</span></span><br><span class="line"></span><br><span class="line">datestyle = 'iso, mdy'</span><br><span class="line"><span class="meta">#</span><span class="bash">intervalstyle = <span class="string">'postgres'</span></span></span><br><span class="line">timezone = 'UTC'</span><br><span class="line"><span class="meta">#</span><span class="bash">timezone_abbreviations = <span class="string">'Default'</span>     <span class="comment"># Select the set of available time zone</span></span></span><br><span class="line">					# abbreviations.  Currently, there are</span><br><span class="line">					#   Default</span><br><span class="line">					#   Australia (historical usage)</span><br><span class="line">					#   India</span><br><span class="line">					# You can create your own file in</span><br><span class="line">					# share/timezonesets/.</span><br><span class="line"><span class="meta">#</span><span class="bash">extra_float_digits = 0			<span class="comment"># min -15, max 3</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash">client_encoding = sql_ascii		<span class="comment"># actually, defaults to database</span></span></span><br><span class="line">					# encoding</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> These settings are initialized by initdb, but they can be changed.</span></span><br><span class="line">lc_messages = 'en_US.UTF-8'			# locale for system error message</span><br><span class="line">					# strings</span><br><span class="line">lc_monetary = 'en_US.UTF-8'			# locale for monetary formatting</span><br><span class="line">lc_numeric = 'en_US.UTF-8'			# locale for number formatting</span><br><span class="line">lc_time = 'en_US.UTF-8'				# locale for time formatting</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> default configuration <span class="keyword">for</span> text search</span></span><br><span class="line">default_text_search_config = 'pg_catalog.english'</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> - Shared Library Preloading -</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash">shared_preload_libraries = <span class="string">''</span>	<span class="comment"># (change requires restart)</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash">local_preload_libraries = <span class="string">''</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash">session_preload_libraries = <span class="string">''</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash">jit_provider = <span class="string">'llvmjit'</span>		<span class="comment"># JIT library to use</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> - Other Defaults -</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash">dynamic_library_path = <span class="string">'$libdir'</span></span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash">------------------------------------------------------------------------------</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> LOCK MANAGEMENT</span></span><br><span class="line"><span class="meta">#</span><span class="bash">------------------------------------------------------------------------------</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash">deadlock_timeout = 1s</span></span><br><span class="line"><span class="meta">#</span><span class="bash">max_locks_per_transaction = 64		<span class="comment"># min 10</span></span></span><br><span class="line">					# (change requires restart)</span><br><span class="line"><span class="meta">#</span><span class="bash">max_pred_locks_per_transaction = 64	<span class="comment"># min 10</span></span></span><br><span class="line">					# (change requires restart)</span><br><span class="line"><span class="meta">#</span><span class="bash">max_pred_locks_per_relation = -2	<span class="comment"># negative values mean</span></span></span><br><span class="line">					# (max_pred_locks_per_transaction</span><br><span class="line">					#  / -max_pred_locks_per_relation) - 1</span><br><span class="line"><span class="meta">#</span><span class="bash">max_pred_locks_per_page = 2            <span class="comment"># min 0</span></span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash">------------------------------------------------------------------------------</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> VERSION AND PLATFORM COMPATIBILITY</span></span><br><span class="line"><span class="meta">#</span><span class="bash">------------------------------------------------------------------------------</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> - Previous PostgreSQL Versions -</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash">array_nulls = on</span></span><br><span class="line"><span class="meta">#</span><span class="bash">backslash_quote = safe_encoding	<span class="comment"># on, off, or safe_encoding</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash">default_with_oids = off</span></span><br><span class="line"><span class="meta">#</span><span class="bash">escape_string_warning = on</span></span><br><span class="line"><span class="meta">#</span><span class="bash">lo_compat_privileges = off</span></span><br><span class="line"><span class="meta">#</span><span class="bash">operator_precedence_warning = off</span></span><br><span class="line"><span class="meta">#</span><span class="bash">quote_all_identifiers = off</span></span><br><span class="line"><span class="meta">#</span><span class="bash">standard_conforming_strings = on</span></span><br><span class="line"><span class="meta">#</span><span class="bash">synchronize_seqscans = on</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> - Other Platforms and Clients -</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash">transform_null_equals = off</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash">------------------------------------------------------------------------------</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> ERROR HANDLING</span></span><br><span class="line"><span class="meta">#</span><span class="bash">------------------------------------------------------------------------------</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash">exit_on_error = off			<span class="comment"># terminate session on any error?</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash">restart_after_crash = on		<span class="comment"># reinitialize after backend crash?</span></span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash">------------------------------------------------------------------------------</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> CONFIG FILE INCLUDES</span></span><br><span class="line"><span class="meta">#</span><span class="bash">------------------------------------------------------------------------------</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> These options allow settings to be loaded from files other than the</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> default postgresql.conf.</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash">include_dir = <span class="string">'conf.d'</span>			<span class="comment"># include files ending in '.conf' from</span></span></span><br><span class="line">					# directory 'conf.d'</span><br><span class="line"><span class="meta">#</span><span class="bash">include_if_exists = <span class="string">'exists.conf'</span>	<span class="comment"># include file only if it exists</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash">include = <span class="string">'special.conf'</span>		<span class="comment"># include file</span></span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash">------------------------------------------------------------------------------</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> CUSTOMIZED OPTIONS</span></span><br><span class="line"><span class="meta">#</span><span class="bash">------------------------------------------------------------------------------</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> Add settings <span class="keyword">for</span> extensions here</span></span><br></pre></td></tr></table></figure>
+<h3 id="pg-hba-conf"><a href="#pg-hba-conf" class="headerlink" title="pg_hba.conf"></a>pg_hba.conf</h3><p>​    客户端认证配置文件，允许哪些用户连接到哪个数据库，允许哪些IP或者哪个网段的IP连接到本服务器，以及指定连接时使用的身份验证模式</p>
+<p>pg_hba.conf 客户端认证配置文件的认证类型包括:</p>
+<ul>
+<li><p>trust 本地可以使用 psql -U postgres 直接登录服务器； (生产环境勿用)</p>
+</li>
+<li><p>peer 本地可以使用 <code>psql -h 127.0.0.1 -d postgres -U postgres</code>直接登录服务器; (peer使用发起端的操作系统名进行身份验证)</p>
+</li>
+<li><p>password 使用 用户名密码(明文密码) 登录 ； (生产环境勿用)</p>
+</li>
+<li><p>ident  </p>
+<p>​    ident是Linux下PostgreSQL默认的local认证方式，凡是能正确登录服务器的操作系统用户（注：不是数据库用户）就能使用本用户映射的数据库用户不需密码登录数据库。    </p>
+</li>
+<li><p>md5    md5是常用的密码认证方式，如果你不使用ident，最好使用md5。密码是以md5形式传送给数据库，较安全，且不需建立同名的操作系统用户</p>
+</li>
+<li><p>reject    拒绝认证<br>建议使用md5方式,不同用户相同密码加密的结果也不相同,因为会使用用户名和密码一同加密. 所以要注意:若已设密码的用户名称改变了,密码也会失效…</p>
+</li>
+<li><p>Ident和peer模式适用于Linux，Unix和Mac,不适用于windwos</p>
+</li>
+</ul>
+<h3 id="pg-ident-conf"><a href="#pg-ident-conf" class="headerlink" title="pg_ident.conf"></a>pg_ident.conf</h3><p>​    用户映射文件，若客户端使用ident类型认证,就需要这里的映射关系了.<br>比如，服务器上有名为user1的操作系统用户，同时数据库上也有同名的数据库用户，user1登录操作系统后可以直接输入psql，以user1数据库用户身份登录数据库且不需密码。<br>很多初学者都会遇到psql -U username登录数据库却出现“username ident 认证失败”的错误，明明数据库用户已经createuser。<br>原因就在于此，使用了ident认证方式，却没有同名的操作系统用户或没有相应的映射用户。<br>解决方案：1、在pg_ident.conf中添加映射用户；2、改变认证方式。</p>
+<p>CentOS7安装了PostgreSQL10和pgadmin4后,pgadmin4始终登陆数据库提示用户认证失败,<br>就是因为Linux下PostgreSQL默认的local认证方式是ident,而pg_ident.cong用户映射文件里并没有任何映射用户,<br>所以可以修改认证方式为md5,即可使用密码成功登陆了.</p>
+<p>参考文档</p>
+<ol>
+<li><a href="https://www.cnblogs.com/sztom/p/9534323.html" target="_blank" rel="noopener">https://www.cnblogs.com/sztom/p/9534323.html</a></li>
+</ol>
+
+      
+    </div>
+
+    
+      
+
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/PostgreSQL/" rel="tag"># PostgreSQL</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/02/12/Linux/" rel="next" title="Linux">
+                <i class="fa fa-chevron-left"></i> Linux
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/03/19/hello-world/" rel="prev" title="Hello World">
+                Hello World <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/avatar.png" alt="Cloudy">
+            
+              <p class="site-author-name" itemprop="name">Cloudy</p>
+              <p class="site-description motion-element" itemprop="description">Cloudy的自留地</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">7</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">3</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">6</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://github.com/cloudyslife" title="GitHub &rarr; https://github.com/cloudyslife" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="mailto:314705487@qq.com" title="E-Mail &rarr; mailto:314705487@qq.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                </span>
+              
+            </div>
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#配置文件位置"><span class="nav-number">1.</span> <span class="nav-text">配置文件位置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#postgresql-conf"><span class="nav-number">2.</span> <span class="nav-text">postgresql.conf</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#pg-hba-conf"><span class="nav-number">3.</span> <span class="nav-text">pg_hba.conf</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#pg-ident-conf"><span class="nav-number">4.</span> <span class="nav-text">pg_ident.conf</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Cloudy</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">站点总字数：</span>
+    
+    <span title="站点总字数">40k</span>
+  
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    
+      <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
+    
+    <span title="站点阅读时长">37 分钟</span>
+  
+</div>
+
+
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.8.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> v6.7.0</div>
+
+
+
+
+        
+
+
+
+
+
+
+<div>
+<!-- 填写你的友盟代码 -->
+<script type="text/javascript" src="https://s5.cnzz.com/z_stat.php?id=1276109684&web_id=1276109684"></script>
+<script type="text/javascript">
+var cnzz_protocol = (("https:" == document.location.protocol) ? "https://" : "http://");
+document.write(unescape("%3Cspan id='cnzz_stat_icon_1276109684'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s5.cnzz.com/z_stat.php%3Fid%3D1276109684' 
+type='text/javascript'%3E%3C/script%3E"));
+</script>
+<!-- 你的友盟代码 end -->
+</div>
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/js/src/utils.js?v=6.7.0"></script>
+
+  <script src="/js/src/motion.js?v=6.7.0"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/src/affix.js?v=6.7.0"></script>
+
+  <script src="/js/src/schemes/pisces.js?v=6.7.0"></script>
+
+
+
+  
+  <script src="/js/src/scrollspy.js?v=6.7.0"></script>
+<script src="/js/src/post-details.js?v=6.7.0"></script>
+
+
+
+  
+
+
+  <script src="/js/src/bootstrap.js?v=6.7.0"></script>
+
+
+
+  
+  
+
+<script src="//cdn1.lncld.net/static/js/3.11.1/av-min.js"></script>
+
+
+
+<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+
+<script>
+  var GUEST = ['nick', 'mail', 'link'];
+  var guest = 'nick,mail,link';
+  guest = guest.split(',').filter(function(item) {
+    return GUEST.indexOf(item) > -1;
+  });
+  new Valine({
+    el: '#comments',
+    verify: false,
+    notify: false,
+    appId: 'jTx09jYkh6asgXa9s6gWLLlL-gzGzoHsz',
+    appKey: 'mz8mN5JaqNOhoJz27xMeXs7K',
+    placeholder: 'Just go go',
+    avatar: 'mm',
+    meta: guest,
+    pageSize: '10' || 10,
+    visitor: false
+  });
+</script>
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+<!-- 雪花特效 -->
+<script type="text/javascript">
+  var windowWidth = $(window).width();
+  if (windowWidth > 480) {
+    document.write('<script type="text/javascript" src="/js/src/snow.js"><\/script>');
+  }
+</script>
+</body>
+</html>

@@ -1,0 +1,1069 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
+
+<link rel="stylesheet" href="/css/main.css?v=6.7.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.7.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.7.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.7.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.7.0" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '6.7.0',
+    sidebar: {"position":"left","display":"hide","offset":12,"b2t":false,"scrollpercent":true,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+<script>(function(T,h,i,n,k,P,a,g,e){g=function(){P=h.createElement(i);a=h.getElementsByTagName(i)[0];P.src=k;P.charset="utf-8";P.async=1;a.parentNode.insertBefore(P,a)};T["ThinkPageWeatherWidgetObject"]=n;T[n]||(T[n]=function(){(T[n].q=T[n].q||[]).push(arguments)});T[n].l=+new Date();if(T.attachEvent){T.attachEvent("onload",g)}else{T.addEventListener("load",g,false)}}(window,document,"script","tpwidget","//widget.seniverse.com/widget/chameleon.js"))</script>
+<script>tpwidget("init", {
+    "flavor": "bubble",
+    "location": "WM7B0X53DZW2",
+    "geolocation": "enabled",
+    "position": "top-right",
+    "margin": "10px 6px",
+    "language": "auto",
+    "unit": "c",
+    "theme": "chameleon",
+    "uid": "U1AAC13036",
+    "hash": "8d6b03486fba486345f7df66ac8bee11"
+});
+tpwidget("show");</script>
+
+  <meta name="description" content="前言本文转自 https://www.donlex.cn/archives/undefined.html 最近更新了一下站点的一些配置，让网站的趣味性有了一定的提升。主要做了一下几点更新。  添加雪花效果 添加天气插件 加入CNZZ统计 下面将详细分享一下过程经历！">
+<meta name="keywords" content="Hexo,NexT">
+<meta property="og:type" content="article">
+<meta property="og:title" content="站点配置更新">
+<meta property="og:url" content="https://www.cloudyslife.cn/2019/01/30/hexo配置更新/index.html">
+<meta property="og:site_name" content="Cloudy">
+<meta property="og:description" content="前言本文转自 https://www.donlex.cn/archives/undefined.html 最近更新了一下站点的一些配置，让网站的趣味性有了一定的提升。主要做了一下几点更新。  添加雪花效果 添加天气插件 加入CNZZ统计 下面将详细分享一下过程经历！">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://i.loli.net/2019/01/07/5c32f266e786e.png">
+<meta property="og:image" content="https://i.loli.net/2019/01/07/5c32f21391b50.png">
+<meta property="og:image" content="https://i.loli.net/2019/01/07/5c32f22e7156f.png">
+<meta property="og:image" content="https://i.loli.net/2019/01/07/5c32f24ab04e9.png">
+<meta property="og:updated_time" content="2019-03-19T04:10:29.604Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="站点配置更新">
+<meta name="twitter:description" content="前言本文转自 https://www.donlex.cn/archives/undefined.html 最近更新了一下站点的一些配置，让网站的趣味性有了一定的提升。主要做了一下几点更新。  添加雪花效果 添加天气插件 加入CNZZ统计 下面将详细分享一下过程经历！">
+<meta name="twitter:image" content="https://i.loli.net/2019/01/07/5c32f266e786e.png">
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Cloudy" type="application/atom+xml">
+
+
+
+
+  <link rel="canonical" href="https://www.cloudyslife.cn/2019/01/30/hexo配置更新/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>站点配置更新 | Cloudy</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Cloudy</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">Cloudy的自留地</p>
+      
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-sitemap">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/sitemap.xml" rel="section"><i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br>站点地图</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://www.cloudyslife.cn/2019/01/30/hexo配置更新/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Cloudy">
+      <meta itemprop="description" content="Cloudy的自留地">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Cloudy">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">站点配置更新
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-01-30 10:23:00" itemprop="dateCreated datePublished" datetime="2019-01-30T10:23:00+08:00">2019-01-30</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-03-19 12:10:29" itemprop="dateModified" datetime="2019-03-19T12:10:29+08:00">2019-03-19</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/前端/" itemprop="url" rel="index"><span itemprop="name">前端</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+              
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+            
+                <a href="/2019/01/30/hexo配置更新/#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">评论数：</span> <span class="post-comments-count valine-comment-count" data-xid="/2019/01/30/hexo配置更新/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-symbolscount">
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">本文字数：</span>
+                
+                <span title="本文字数">9.1k</span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">8 分钟</span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>本文转自 <a href="https://www.donlex.cn/archives/undefined.html" target="_blank" rel="noopener">https://www.donlex.cn/archives/undefined.html</a></p>
+<p>最近更新了一下站点的一些配置，让网站的趣味性有了一定的提升。主要做了一下几点更新。</p>
+<ol>
+<li>添加雪花效果</li>
+<li>添加天气插件</li>
+<li>加入CNZZ统计 下面将详细分享一下过程经历！</li>
+</ol>
+<a id="more"></a>
+<h3 id="添加雪花效果"><a href="#添加雪花效果" class="headerlink" title="添加雪花效果"></a>添加雪花效果</h3><p>实现方法：在 <code>\themes\next\source\js\src</code> 目录下新建一个 <code>snow.js</code> 文件，复制粘贴一下代码。</p>
+<p>其中样式一是六边形的雪片，样式二是小圆点的雪花，其自行调试，选择喜欢的样式。</p>
+<h4 id="样式一"><a href="#样式一" class="headerlink" title="样式一"></a>样式一</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line">/*样式一*/</span><br><span class="line">(function($)&#123;</span><br><span class="line">	$.fn.snow = function(options)&#123;</span><br><span class="line">	var $flake = $(&apos;&lt;div id=&quot;snowbox&quot; /&gt;&apos;).css(&#123;&apos;position&apos;: &apos;absolute&apos;,&apos;z-index&apos;:&apos;9999&apos;, &apos;top&apos;: &apos;-50px&apos;&#125;).html(&apos;&amp;#10052;&apos;),</span><br><span class="line">	documentHeight 	= $(document).height(),</span><br><span class="line">	documentWidth	= $(document).width(),</span><br><span class="line">	defaults = &#123;</span><br><span class="line">		minSize		: 10,</span><br><span class="line">		maxSize		: 20,</span><br><span class="line">		newOn		: 1000,</span><br><span class="line">		flakeColor	: &quot;#AFDAEF&quot; /* 此处可以定义雪花颜色，若要白色可以改为#FFFFFF */</span><br><span class="line">	&#125;,</span><br><span class="line">	options	= $.extend(&#123;&#125;, defaults, options);</span><br><span class="line">	var interval= setInterval( function()&#123;</span><br><span class="line">	var startPositionLeft = Math.random() * documentWidth - 100,</span><br><span class="line">	startOpacity = 0.5 + Math.random(),</span><br><span class="line">	sizeFlake = options.minSize + Math.random() * options.maxSize,</span><br><span class="line">	endPositionTop = documentHeight - 200,</span><br><span class="line">	endPositionLeft = startPositionLeft - 500 + Math.random() * 500,</span><br><span class="line">	durationFall = documentHeight * 10 + Math.random() * 5000;</span><br><span class="line">	$flake.clone().appendTo(&apos;body&apos;).css(&#123;</span><br><span class="line">		left: startPositionLeft,</span><br><span class="line">		opacity: startOpacity,</span><br><span class="line">		&apos;font-size&apos;: sizeFlake,</span><br><span class="line">		color: options.flakeColor</span><br><span class="line">	&#125;).animate(&#123;</span><br><span class="line">		top: endPositionTop,</span><br><span class="line">		left: endPositionLeft,</span><br><span class="line">		opacity: 0.2</span><br><span class="line">	&#125;,durationFall,&apos;linear&apos;,function()&#123;</span><br><span class="line">		$(this).remove()</span><br><span class="line">	&#125;);</span><br><span class="line">	&#125;, options.newOn);</span><br><span class="line">    &#125;;</span><br><span class="line">&#125;)(jQuery);</span><br><span class="line">$(function()&#123;</span><br><span class="line">    $.fn.snow(&#123; </span><br><span class="line">	    minSize: 5, /* 定义雪花最小尺寸 */</span><br><span class="line">	    maxSize: 50,/* 定义雪花最大尺寸 */</span><br><span class="line">	    newOn: 300  /* 定义密集程度，数字越小越密集 */</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<h4 id="样式二"><a href="#样式二" class="headerlink" title="样式二"></a>样式二</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br></pre></td><td class="code"><pre><span class="line">/*样式二*/</span><br><span class="line">/* 控制下雪 */</span><br><span class="line">function snowFall(snow) &#123;</span><br><span class="line">    /* 可配置属性 */</span><br><span class="line">    snow = snow || &#123;&#125;;</span><br><span class="line">    this.maxFlake = snow.maxFlake || 200;   /* 最多片数 */</span><br><span class="line">    this.flakeSize = snow.flakeSize || 10;  /* 雪花形状 */</span><br><span class="line">    this.fallSpeed = snow.fallSpeed || 1;   /* 坠落速度 */</span><br><span class="line">&#125;</span><br><span class="line">/* 兼容写法 */</span><br><span class="line">requestAnimationFrame = window.requestAnimationFrame ||</span><br><span class="line">    window.mozRequestAnimationFrame ||</span><br><span class="line">    window.webkitRequestAnimationFrame ||</span><br><span class="line">    window.msRequestAnimationFrame ||</span><br><span class="line">    window.oRequestAnimationFrame ||</span><br><span class="line">    function(callback) &#123; setTimeout(callback, 1000 / 60); &#125;;</span><br><span class="line"></span><br><span class="line">cancelAnimationFrame = window.cancelAnimationFrame ||</span><br><span class="line">    window.mozCancelAnimationFrame ||</span><br><span class="line">    window.webkitCancelAnimationFrame ||</span><br><span class="line">    window.msCancelAnimationFrame ||</span><br><span class="line">	window.oCancelAnimationFrame;</span><br><span class="line">/* 开始下雪 */</span><br><span class="line">snowFall.prototype.start = function()&#123;</span><br><span class="line">    /* 创建画布 */</span><br><span class="line">    snowCanvas.apply(this);</span><br><span class="line">    /* 创建雪花形状 */</span><br><span class="line">    createFlakes.apply(this);</span><br><span class="line">    /* 画雪 */</span><br><span class="line">    drawSnow.apply(this)</span><br><span class="line">&#125;</span><br><span class="line">/* 创建画布 */</span><br><span class="line">function snowCanvas() &#123;</span><br><span class="line">    /* 添加Dom结点 */</span><br><span class="line">    var snowcanvas = document.createElement(&quot;canvas&quot;);</span><br><span class="line">    snowcanvas.id = &quot;snowfall&quot;;</span><br><span class="line">    snowcanvas.width = window.innerWidth;</span><br><span class="line">    snowcanvas.height = document.body.clientHeight;</span><br><span class="line">    snowcanvas.setAttribute(&quot;style&quot;, &quot;position:absolute; top: 0; left: 0; z-index: 1; pointer-events: none;&quot;);</span><br><span class="line">    document.getElementsByTagName(&quot;body&quot;)[0].appendChild(snowcanvas);</span><br><span class="line">    this.canvas = snowcanvas;</span><br><span class="line">    this.ctx = snowcanvas.getContext(&quot;2d&quot;);</span><br><span class="line">    /* 窗口大小改变的处理 */</span><br><span class="line">    window.onresize = function() &#123;</span><br><span class="line">        snowcanvas.width = window.innerWidth;</span><br><span class="line">        /* snowcanvas.height = window.innerHeight */</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">/* 雪运动对象 */</span><br><span class="line">function flakeMove(canvasWidth, canvasHeight, flakeSize, fallSpeed) &#123;</span><br><span class="line">    this.x = Math.floor(Math.random() * canvasWidth);   /* x坐标 */</span><br><span class="line">    this.y = Math.floor(Math.random() * canvasHeight);  /* y坐标 */</span><br><span class="line">    this.size = Math.random() * flakeSize + 2;          /* 形状 */</span><br><span class="line">    this.maxSize = flakeSize;                           /* 最大形状 */</span><br><span class="line">    this.speed = Math.random() * 1 + fallSpeed;         /* 坠落速度 */</span><br><span class="line">    this.fallSpeed = fallSpeed;                         /* 坠落速度 */</span><br><span class="line">    this.velY = this.speed;                             /* Y方向速度 */</span><br><span class="line">    this.velX = 0;                                      /* X方向速度 */</span><br><span class="line">    this.stepSize = Math.random() / 30;                 /* 步长 */</span><br><span class="line">    this.step = 0                                       /* 步数 */</span><br><span class="line">&#125;</span><br><span class="line">flakeMove.prototype.update = function() &#123;</span><br><span class="line">    var x = this.x,</span><br><span class="line">        y = this.y;</span><br><span class="line">    /* 左右摆动(余弦) */</span><br><span class="line">    this.velX *= 0.98;</span><br><span class="line">    if (this.velY &lt;= this.speed) &#123;</span><br><span class="line">        this.velY = this.speed</span><br><span class="line">    &#125;</span><br><span class="line">    this.velX += Math.cos(this.step += .05) * this.stepSize;</span><br><span class="line"></span><br><span class="line">    this.y += this.velY;</span><br><span class="line">    this.x += this.velX;</span><br><span class="line">    /* 飞出边界的处理 */</span><br><span class="line">    if (this.x &gt;= canvas.width || this.x &lt;= 0 || this.y &gt;= canvas.height || this.y &lt;= 0) &#123;</span><br><span class="line">        this.reset(canvas.width, canvas.height)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line">/* 飞出边界-放置最顶端继续坠落 */</span><br><span class="line">flakeMove.prototype.reset = function(width, height) &#123;</span><br><span class="line">    this.x = Math.floor(Math.random() * width);</span><br><span class="line">    this.y = 0;</span><br><span class="line">    this.size = Math.random() * this.maxSize + 2;</span><br><span class="line">    this.speed = Math.random() * 1 + this.fallSpeed;</span><br><span class="line">    this.velY = this.speed;</span><br><span class="line">    this.velX = 0;</span><br><span class="line">&#125;;</span><br><span class="line">// 渲染雪花-随机形状（此处可修改雪花颜色！！！）</span><br><span class="line">flakeMove.prototype.render = function(ctx) &#123;</span><br><span class="line">    var snowFlake = ctx.createRadialGradient(this.x, this.y, 0, this.x, this.y, this.size);</span><br><span class="line">    snowFlake.addColorStop(0, &quot;rgba(255, 255, 255, 0.9)&quot;);  /* 此处是雪花颜色，默认是白色 */</span><br><span class="line">    snowFlake.addColorStop(.5, &quot;rgba(255, 255, 255, 0.5)&quot;); /* 若要改为其他颜色，请自行查 */</span><br><span class="line">    snowFlake.addColorStop(1, &quot;rgba(255, 255, 255, 0)&quot;);    /* 找16进制的RGB 颜色代码。 */</span><br><span class="line">    ctx.save();</span><br><span class="line">    ctx.fillStyle = snowFlake;</span><br><span class="line">    ctx.beginPath();</span><br><span class="line">    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);</span><br><span class="line">    ctx.fill();</span><br><span class="line">    ctx.restore();</span><br><span class="line">&#125;;</span><br><span class="line">/* 创建雪花-定义形状 */</span><br><span class="line">function createFlakes() &#123;</span><br><span class="line">    var maxFlake = this.maxFlake,</span><br><span class="line">        flakes = this.flakes = [],</span><br><span class="line">        canvas = this.canvas;</span><br><span class="line">    for (var i = 0; i &lt; maxFlake; i++) &#123;</span><br><span class="line">        flakes.push(new flakeMove(canvas.width, canvas.height, this.flakeSize, this.fallSpeed))</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">/* 画雪 */</span><br><span class="line">function drawSnow() &#123;</span><br><span class="line">    var maxFlake = this.maxFlake,</span><br><span class="line">        flakes = this.flakes;</span><br><span class="line">    ctx = this.ctx, canvas = this.canvas, that = this;</span><br><span class="line">    /* 清空雪花 */</span><br><span class="line">    ctx.clearRect(0, 0, canvas.width, canvas.height);</span><br><span class="line">    for (var e = 0; e &lt; maxFlake; e++) &#123;</span><br><span class="line">        flakes[e].update();</span><br><span class="line">        flakes[e].render(ctx);</span><br><span class="line">    &#125;</span><br><span class="line">    /*  一帧一帧的画 */</span><br><span class="line">    this.loop = requestAnimationFrame(function() &#123;</span><br><span class="line">        drawSnow.apply(that);</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br><span class="line">/* 调用及控制方法 */</span><br><span class="line">var snow = new snowFall(&#123;maxFlake:60&#125;);</span><br><span class="line">snow.start();</span><br></pre></td></tr></table></figure>
+<p>然后在 <code>\themes\next\layout\_layout.swig</code> 文件里<code>&lt;body&gt;&lt;/body&gt;</code>内部引用即可：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- 雪花特效 --&gt;</span><br><span class="line">&lt;script type=&quot;text/javascript&quot;&gt;</span><br><span class="line">  var windowWidth = $(window).width();</span><br><span class="line">  if (windowWidth &gt; 480) &#123;</span><br><span class="line">    document.write(&apos;&lt;script type=&quot;text/javascript&quot; src=&quot;/js/src/snow.js&quot;&gt;&lt;\/script&gt;&apos;);</span><br><span class="line">  &#125;</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+<p>请确保在你添加的代码上面已经引入了JQ，否则你还需要导入jq</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;script type=&quot;text/javascript&quot; src=&quot;//libs.baidu.com/jquery/1.8.3/jquery.min.js&quot;&gt;&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+<h3 id="添加天气插件"><a href="#添加天气插件" class="headerlink" title="添加天气插件"></a>添加天气插件</h3><p>网上有很多的天气插件，找了很久发现心知天气非常不错。<br>获取地址：<a href="https://www.seniverse.com/widget/get" target="_blank" rel="noopener">https://www.seniverse.com/widget/get</a></p>
+<p>使用心知天气有两点必备条件：</p>
+<ol>
+<li>注册心知天气账号</li>
+<li>博客绑定了域名</li>
+</ol>
+<p>如果你没有域名但是可以通过IP地址进行访问也是可以添加成功的。</p>
+<p>下面说一下详细的过程：</p>
+<h4 id="配置插件"><a href="#配置插件" class="headerlink" title="配置插件"></a>配置插件</h4><p>有账号之后,登录根据自己喜好配置插件。心知天气的自动适配功能非常的不错。<br><a href="https://i.loli.net/2019/01/07/5c32f266e786e.png" target="_blank" rel="noopener"><img src="https://i.loli.net/2019/01/07/5c32f266e786e.png" alt="配置心知.PNG"></a></p>
+<h4 id="安装代码"><a href="#安装代码" class="headerlink" title="安装代码"></a>安装代码</h4><p>选择好配置之后，就可以获取心知的插件代码。获取到代码之后，在<code>\themes\next\layout\_partials\head\custom-head.swig</code>中添加获取的代码。之后就可以部署到Github上了。</p>
+<p>吐槽一下，加载数独真的是很慢，特别是在移动端中，如果你希望你的站点访问速度快一点，建议还是不要为了功能，而放弃用户体验。</p>
+<h3 id="添加CNZZ统计"><a href="#添加CNZZ统计" class="headerlink" title="添加CNZZ统计"></a>添加CNZZ统计</h3><p>刚开始弄NexT主题的时候，对一些配置还不是很明白，所以一直都不敢弄。<br>今天总算有点精神，就把友盟的统计给加上了。之前一直都是用不蒜子的统计，但是不蒜子统计的内容太过简单了，不能够看到其他的一些数据。</p>
+<p>友盟+ 传送门：<a href="https://passport.umeng.com/login?appId=cnzz" target="_blank" rel="noopener">https://passport.umeng.com/login?appId=cnzz</a></p>
+<h4 id="配置站点信息"><a href="#配置站点信息" class="headerlink" title="配置站点信息"></a>配置站点信息</h4><p>登录之后，选择右上角的添加站点，配置好你的站点信息</p>
+<p><a href="https://i.loli.net/2019/01/07/5c32f21391b50.png" target="_blank" rel="noopener"><img src="https://i.loli.net/2019/01/07/5c32f21391b50.png" alt="cnzz添加站点.PNG"></a></p>
+<h4 id="获取代码"><a href="#获取代码" class="headerlink" title="获取代码"></a>获取代码</h4><p>获取友盟提供给你的代码，友盟提供了很多的样式，随便复制一份就行。<br><a href="https://i.loli.net/2019/01/07/5c32f22e7156f.png" target="_blank" rel="noopener"><img src="https://i.loli.net/2019/01/07/5c32f22e7156f.png" alt="cnzz代码.PNG"></a></p>
+<p>在<code>\themes\next\layout\_third-party\analytics\cnzz-analytics.swig</code>中将原来的代码全部删除，复制下面的代码：<br><em>ps：如果没有该文件，请自行创建然后复制修改下面的代码</em></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&#123;% if theme.cnzz_siteid %&#125;</span><br><span class="line">&lt;div&gt;</span><br><span class="line">&lt;!-- 填写你的友盟代码 --&gt;</span><br><span class="line">&lt;script type=&quot;text/javascript&quot;&gt;</span><br><span class="line">	var cnzz_protocol = ((&quot;https:&quot; == document.location.protocol) ? &quot; https://&quot; : &quot; http://&quot;);</span><br><span class="line">	document.write(unescape(&quot;%3Cspan id=&apos;cnzz_stat_icon_12&apos;%3E%3C/span%3E%3Cscript </span><br><span class="line">	src=&apos;&quot; + cnzz_protocol + &quot;s19.cnzz.com/z_stat.php%3Fid%3D12%2show%3Dpic&apos; </span><br><span class="line">	type=&apos;text/javascript&apos;%3E%3C/script%3E&quot;));</span><br><span class="line">&lt;/script&gt;</span><br><span class="line">&lt;!-- 你的友盟代码 end --&gt;</span><br><span class="line">&lt;/div&gt;</span><br><span class="line">&#123;% endif %&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="修改配置文件"><a href="#修改配置文件" class="headerlink" title="修改配置文件"></a>修改配置文件</h4><p>添加了代码之后，还需要修改next的配置文件才能够生效。注意是<strong>主题配置文件</strong><br>打开<code>\themes\next</code>目录下的<code>_config.yml</code>，按<code>ctrl + F</code>搜索<code>CNZZ</code>,找到之后将注释的内容打开，并设置成true，注意空格</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># CNZZ count</span><br><span class="line">cnzz_siteid: true</span><br></pre></td></tr></table></figure>
+<p>这样就可以成功的使用CNZZ进行统计了。建议使用<code>hexo s</code>在本地测试，看是否有问题再部署上去。</p>
+<h4 id="附赠"><a href="#附赠" class="headerlink" title="附赠"></a>附赠</h4><p>在我的博客中，部署友盟上去之后，发现移动端的footer顶上去了。<br><a href="https://i.loli.net/2019/01/07/5c32f24ab04e9.png" target="_blank" rel="noopener"><img src="https://i.loli.net/2019/01/07/5c32f24ab04e9.png" alt="css.PNG"></a><br>哭死: ( 写博客的时候，才发现不蒜子的统计居然变少了，原来不蒜子对域名前加www和不加www的网站是区分统计的。。。<br>算了，反正是佛系博主，随缘吧。。。。</p>
+<p>打开<code>\themes\next\source\css\_custom</code>目录下的<code>custom.styl</code>，添加以下代码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">// Custom styles.</span><br><span class="line">//mobile style footer</span><br><span class="line">@media (max-width: 767px)</span><br><span class="line"> .content-wrap &#123;</span><br><span class="line">    width: 100%;</span><br><span class="line">    padding: 20px;</span><br><span class="line">    min-height: auto;</span><br><span class="line">    margin-bottom: 30px;</span><br><span class="line">    border-radius: initial;</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+<p>注意<code>.content-wrap</code>前面有一个空格，一定要添加，否则博客的样式就全乱了。</p>
+
+      
+    </div>
+
+    
+      
+
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Hexo/" rel="tag"># Hexo</a>
+          
+            <a href="/tags/NexT/" rel="tag"># NexT</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/02/11/docker相关/" rel="prev" title="Docker">
+                Docker <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/avatar.png" alt="Cloudy">
+            
+              <p class="site-author-name" itemprop="name">Cloudy</p>
+              <p class="site-description motion-element" itemprop="description">Cloudy的自留地</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">7</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">3</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">6</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://github.com/cloudyslife" title="GitHub &rarr; https://github.com/cloudyslife" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="mailto:314705487@qq.com" title="E-Mail &rarr; mailto:314705487@qq.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                </span>
+              
+            </div>
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#添加雪花效果"><span class="nav-number">2.</span> <span class="nav-text">添加雪花效果</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#样式一"><span class="nav-number">2.1.</span> <span class="nav-text">样式一</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#样式二"><span class="nav-number">2.2.</span> <span class="nav-text">样式二</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#添加天气插件"><span class="nav-number">3.</span> <span class="nav-text">添加天气插件</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#配置插件"><span class="nav-number">3.1.</span> <span class="nav-text">配置插件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#安装代码"><span class="nav-number">3.2.</span> <span class="nav-text">安装代码</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#添加CNZZ统计"><span class="nav-number">4.</span> <span class="nav-text">添加CNZZ统计</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#配置站点信息"><span class="nav-number">4.1.</span> <span class="nav-text">配置站点信息</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#获取代码"><span class="nav-number">4.2.</span> <span class="nav-text">获取代码</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#修改配置文件"><span class="nav-number">4.3.</span> <span class="nav-text">修改配置文件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#附赠"><span class="nav-number">4.4.</span> <span class="nav-text">附赠</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Cloudy</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">站点总字数：</span>
+    
+    <span title="站点总字数">40k</span>
+  
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    
+      <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
+    
+    <span title="站点阅读时长">37 分钟</span>
+  
+</div>
+
+
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.8.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> v6.7.0</div>
+
+
+
+
+        
+
+
+
+
+
+
+<div>
+<!-- 填写你的友盟代码 -->
+<script type="text/javascript" src="https://s5.cnzz.com/z_stat.php?id=1276109684&web_id=1276109684"></script>
+<script type="text/javascript">
+var cnzz_protocol = (("https:" == document.location.protocol) ? "https://" : "http://");
+document.write(unescape("%3Cspan id='cnzz_stat_icon_1276109684'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s5.cnzz.com/z_stat.php%3Fid%3D1276109684' 
+type='text/javascript'%3E%3C/script%3E"));
+</script>
+<!-- 你的友盟代码 end -->
+</div>
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/js/src/utils.js?v=6.7.0"></script>
+
+  <script src="/js/src/motion.js?v=6.7.0"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/src/affix.js?v=6.7.0"></script>
+
+  <script src="/js/src/schemes/pisces.js?v=6.7.0"></script>
+
+
+
+  
+  <script src="/js/src/scrollspy.js?v=6.7.0"></script>
+<script src="/js/src/post-details.js?v=6.7.0"></script>
+
+
+
+  
+
+
+  <script src="/js/src/bootstrap.js?v=6.7.0"></script>
+
+
+
+  
+  
+
+<script src="//cdn1.lncld.net/static/js/3.11.1/av-min.js"></script>
+
+
+
+<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+
+<script>
+  var GUEST = ['nick', 'mail', 'link'];
+  var guest = 'nick,mail,link';
+  guest = guest.split(',').filter(function(item) {
+    return GUEST.indexOf(item) > -1;
+  });
+  new Valine({
+    el: '#comments',
+    verify: false,
+    notify: false,
+    appId: 'jTx09jYkh6asgXa9s6gWLLlL-gzGzoHsz',
+    appKey: 'mz8mN5JaqNOhoJz27xMeXs7K',
+    placeholder: 'Just go go',
+    avatar: 'mm',
+    meta: guest,
+    pageSize: '10' || 10,
+    visitor: false
+  });
+</script>
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+<!-- 雪花特效 -->
+<script type="text/javascript">
+  var windowWidth = $(window).width();
+  if (windowWidth > 480) {
+    document.write('<script type="text/javascript" src="/js/src/snow.js"><\/script>');
+  }
+</script>
+</body>
+</html>
