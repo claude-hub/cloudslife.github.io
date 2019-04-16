@@ -563,7 +563,7 @@ tpwidget("show");</script>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">vim /var/lib/pgsql/11/data/postgresql.conf</span><br><span class="line">修改#listen_addresses = 'localhost'  为  listen_addresses = '*'</span><br><span class="line">当然，此处‘*’也可以改为任何你想开放的服务器IP</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>信任连接</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">vim /var/lib/pgsql/11/data/pg_hba.conf</span><br><span class="line"><span class="meta">#</span><span class="bash"> IPv4 <span class="built_in">local</span> connections:</span></span><br><span class="line">host    all             all             127.0.0.1/32            ident</span><br><span class="line">允许所有ip通过密码连接</span><br><span class="line">host    all             all             0.0.0.0/0               md5</span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">vim /var/lib/pgsql/11/data/pg_hba.conf</span><br><span class="line"><span class="meta">#</span> IPv4 local connections:</span><br><span class="line">host    all             all             127.0.0.1/32            ident</span><br><span class="line">允许所有ip通过密码连接</span><br><span class="line">host    all             all             0.0.0.0/0               md5</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>配置防火墙</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">firewall-cmd --permanent --add-port=5432/tcp  </span><br><span class="line">firewall-cmd --permanent --add-port=80/tcp  </span><br><span class="line">firewall-cmd --reload</span><br></pre></td></tr></table></figure>
@@ -728,7 +728,7 @@ tpwidget("show");</script>
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">9</span>
+                    <span class="site-state-item-count">10</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -747,7 +747,9 @@ tpwidget("show");</script>
                     
                       
                     
-                    <span class="site-state-item-count">3</span>
+                      
+                    
+                    <span class="site-state-item-count">4</span>
                     <span class="site-state-item-name">分类</span>
                   </a>
                 </div>
@@ -780,7 +782,9 @@ tpwidget("show");</script>
                     
                       
                     
-                    <span class="site-state-item-count">10</span>
+                      
+                    
+                    <span class="site-state-item-count">11</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>

@@ -376,6 +376,218 @@ tpwidget("show");</script>
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://www.cloudyslife.cn/2019/04/16/git/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Cloudy">
+      <meta itemprop="description" content="Cloudy的自留地">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Cloudy">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2019/04/16/git/" class="post-title-link" itemprop="url">'git'</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-04-16 15:39:37 / 修改时间：15:44:21" itemprop="dateCreated datePublished" datetime="2019-04-16T15:39:37+08:00">2019-04-16</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/git/" itemprop="url" rel="index"><span itemprop="name">git</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+              
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+            
+                <a href="/2019/04/16/git/#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">评论数：</span> <span class="post-comments-count valine-comment-count" data-xid="/2019/04/16/git/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-symbolscount">
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">本文字数：</span>
+                
+                <span title="本文字数">427</span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">1 分钟</span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>git add . //添加所有文件  </p>
+<p>git commit -m “message”  </p>
+<p><strong>git reset –soft HEAD^</strong>   </p>
+<p>HEAD^的意思是上一个版本，也可以写成HEAD~1  </p>
+<p>如果你进行了2次commit，想都撤回，可以使用HEAD~2  </p>
+<h2 id="–mixed"><a href="#–mixed" class="headerlink" title="–mixed"></a>–mixed</h2><p>意思是：不删除工作空间改动代码，撤销commit，并且撤销git add . 操作  </p>
+<p>这个为默认参数,git reset –mixed HEAD^ 和 git reset HEAD^ 效果是一样的。</p>
+<h2 id="–soft"><a href="#–soft" class="headerlink" title="–soft"></a>–soft</h2><p>不删除工作空间改动代码，撤销commit，不撤销git add . </p>
+<h2 id="–hard"><a href="#–hard" class="headerlink" title="–hard"></a>–hard</h2><p>删除工作空间改动代码，撤销commit，撤销git add . </p>
+<p>注意完成这个操作后，就恢复到了上一次的commit状态。</p>
+<h3 id="顺便说一下，如果commit注释写错了，只是想改一下注释，只需要："><a href="#顺便说一下，如果commit注释写错了，只是想改一下注释，只需要：" class="headerlink" title="顺便说一下，如果commit注释写错了，只是想改一下注释，只需要："></a>顺便说一下，如果commit注释写错了，只是想改一下注释，只需要：</h3><p>git commit –amend</p>
+<p>此时会进入默认vim编辑器，修改注释完毕后保存就好了。</p>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://www.cloudyslife.cn/2019/03/28/react/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -421,7 +633,7 @@ tpwidget("show");</script>
                 
               
 
-              <time title="创建时间：2019-03-28 11:16:25 / 修改时间：11:28:42" itemprop="dateCreated datePublished" datetime="2019-03-28T11:16:25+08:00">2019-03-28</time>
+              <time title="创建时间：2019-03-28 11:16:25 / 修改时间：13:40:47" itemprop="dateCreated datePublished" datetime="2019-03-28T11:16:25+08:00">2019-03-28</time>
             
 
             
@@ -484,7 +696,7 @@ tpwidget("show");</script>
                 
                   <span class="post-meta-item-text">本文字数：</span>
                 
-                <span title="本文字数">61</span>
+                <span title="本文字数">62</span>
               
 
               
@@ -2284,7 +2496,7 @@ tpwidget("show");</script>
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">9</span>
+                    <span class="site-state-item-count">10</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -2303,7 +2515,9 @@ tpwidget("show");</script>
                     
                       
                     
-                    <span class="site-state-item-count">3</span>
+                      
+                    
+                    <span class="site-state-item-count">4</span>
                     <span class="site-state-item-name">分类</span>
                   </a>
                 </div>
@@ -2336,7 +2550,9 @@ tpwidget("show");</script>
                     
                       
                     
-                    <span class="site-state-item-count">10</span>
+                      
+                    
+                    <span class="site-state-item-count">11</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>

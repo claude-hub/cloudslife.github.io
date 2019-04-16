@@ -1,6 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA['git']]></title>
+    <url>%2F2019%2F04%2F16%2Fgit%2F</url>
+    <content type="text"><![CDATA[git add . //添加所有文件 git commit -m “message” git reset –soft HEAD^ HEAD^的意思是上一个版本，也可以写成HEAD~1 如果你进行了2次commit，想都撤回，可以使用HEAD~2 –mixed意思是：不删除工作空间改动代码，撤销commit，并且撤销git add . 操作 这个为默认参数,git reset –mixed HEAD^ 和 git reset HEAD^ 效果是一样的。 –soft不删除工作空间改动代码，撤销commit，不撤销git add . –hard删除工作空间改动代码，撤销commit，撤销git add . 注意完成这个操作后，就恢复到了上一次的commit状态。 顺便说一下，如果commit注释写错了，只是想改一下注释，只需要：git commit –amend 此时会进入默认vim编辑器，修改注释完毕后保存就好了。]]></content>
+      <categories>
+        <category>git</category>
+      </categories>
+      <tags>
+        <tag>git</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[react]]></title>
     <url>%2F2019%2F03%2F28%2Freact%2F</url>
     <content type="text"><![CDATA[前言推荐一本书籍，这本书通过一个小的demo，一步步实现redux，react-redux。 《React.js 小书》]]></content>
